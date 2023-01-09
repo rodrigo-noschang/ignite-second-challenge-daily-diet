@@ -22,7 +22,8 @@ export default {
         BOLD: 'NunitoSans_700Bold'
     },
     FONT_SIZE: {
-        SM: 12,
+        XSM: 12,
+        SM: 14,
         MD: 18,
         LG: 32
     }
