@@ -6,6 +6,7 @@ import { NunitoSans_400Regular, NunitoSans_700Bold, NunitoSans_800ExtraBold, use
 import theme from './src/theme';
 
 import Home from '@screens/Home';
+import Statistics from '@screens/Statistics';
 
 export default function App() {
 	const [fontsLoaded] = useFonts({ NunitoSans_400Regular, NunitoSans_700Bold, NunitoSans_800ExtraBold })
@@ -14,7 +15,7 @@ export default function App() {
 		<ThemeProvider theme = {theme}>
 			<StatusBar />
 			{ fontsLoaded ?
-				<Home />
+				<Statistics />
 			:
 				<ActivityIndicator />
 			}
