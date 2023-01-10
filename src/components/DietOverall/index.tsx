@@ -4,7 +4,11 @@ import { DietOverallContainer,
     Title, 
     SubTitle } from './styles';
 
-const DietOverall = () => {
+type Props = {
+    inDietMealsPercentage: string
+}
+
+const DietOverall = ({ inDietMealsPercentage }: Props) => {
 
     return (
         <DietOverallContainer>
@@ -13,7 +17,7 @@ const DietOverall = () => {
             </IconTouchable>
 
             <Title>
-                90,86%
+                { inDietMealsPercentage }%
             </Title>
 
             <SubTitle>

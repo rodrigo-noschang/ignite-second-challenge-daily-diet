@@ -23,7 +23,7 @@ export const Icon = styled(MaterialCommunityIcons).attrs(({ theme }) => ({
 export const Title = styled.Text`
     ${({ theme }) => css`
         font-size: ${theme.FONT_SIZE.LG}px;
-        font-family: ${theme.FONT_FAMILY.BOLD};
+        font-family: ${theme.FONT_FAMILY.EXTRA_BOLD};
     `}
 `;
 

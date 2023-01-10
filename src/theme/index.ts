@@ -19,7 +19,8 @@ export default {
     },
     FONT_FAMILY: {
         REGULAR: 'NunitoSans_400Regular',
-        BOLD: 'NunitoSans_700Bold'
+        BOLD: 'NunitoSans_700Bold',
+        EXTRA_BOLD: 'NunitoSans_800ExtraBold'
     },
     FONT_SIZE: {
         XSM: 12,
