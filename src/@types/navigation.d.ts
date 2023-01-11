@@ -5,7 +5,8 @@ export declare global {
         interface RootParamList {
             home: undefined,
             statistics: {
-                meals: MealType[]
+                meals: MealType[],
+                mealsInDietPercentage: string
             }
         }
     }

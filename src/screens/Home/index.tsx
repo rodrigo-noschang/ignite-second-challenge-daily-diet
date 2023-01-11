@@ -22,6 +22,7 @@ export type DailyMealType = {
 
 const Home = () => {
     const [inDietMealsPercentage, setInDietMealsPercentage] = useState('');
+    const [mealsOnly, setMealsOnly] = useState<MealType[]>([]);
     const dailyMeals: DailyMealType[] = [
         {
             date: '12.08.22',
@@ -29,7 +30,7 @@ const Home = () => {
                 {
                     mealFood: 'X-tudo',
                     time: '20:00',
-                    isInDiet: false
+                    isInDiet: true
                 },
                 {
                     mealFood: 'Sanduíche',
@@ -54,7 +55,7 @@ const Home = () => {
                 {
                     mealFood: 'X-tudo',
                     time: '20:00',
-                    isInDiet: false
+                    isInDiet: true
                 },
                 {
                     mealFood: 'Sanduíche',
@@ -64,7 +65,7 @@ const Home = () => {
                 {
                     mealFood: 'Lasanha de frango com queijo',
                     time: '12:30',
-                    isInDiet: false
+                    isInDiet: true
                 },
                 {
                     mealFood: 'Torta de chocolate',
@@ -77,16 +78,19 @@ const Home = () => {
     const navigation = useNavigation();
 
     const handleNavigation = () => {
-        const allMealsOnly = dailyMeals.map(dailyMeal => dailyMeal.mealsOfTheDay).flat();
-        navigation.navigate('statistics', {meals: allMealsOnly})
+        navigation.navigate('statistics', {
+            meals: mealsOnly,
+            mealsInDietPercentage: inDietMealsPercentage
+        })
     }
 
     useEffect(() => {
         const allMealsOnly = dailyMeals.map(dailyMeal => dailyMeal.mealsOfTheDay).flat();
         const inDietMeals = allMealsOnly.filter(meal => meal.isInDiet);
         
-        const inDietRatio = ((inDietMeals.length / allMealsOnly.length) * 100).toFixed(2);
+        const inDietRatio = ((inDietMeals.length / allMealsOnly.length) * 100).toFixed(2).replace('.', ',');
         
+        setMealsOnly(allMealsOnly);
         setInDietMealsPercentage(inDietRatio);
     }, [])
 

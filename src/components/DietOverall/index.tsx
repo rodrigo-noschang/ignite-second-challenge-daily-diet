@@ -18,7 +18,7 @@ const DietOverall = ({ inDietMealsPercentage, onNavigate }: Props) => {
             </IconTouchable>
 
             <Title>
-                { inDietMealsPercentage }%
+                { inDietMealsPercentage}%
             </Title>
 
             <SubTitle>

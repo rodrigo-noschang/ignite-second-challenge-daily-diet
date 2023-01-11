@@ -20,11 +20,44 @@ const Statistics = () => {
     const route = useRoute();
 
     const { meals } = route.params as RouteParams;
-    
-    console.log('On Statistics Screen - > ', meals);
+
+    const bestSequenceOfInDietMeals = calculateBestSequenceOfMealsInDiet();
+    const registeredMeals = calculateRegisteredMeals();
+    const mealsInDiet = calculateMealsInDiet();
+    const mealsNotInDiet = calculateMealsNotInDiet();
 
     const handleNavigation = () => {
         navigation.navigate('home');
+    }
+
+    function calculateBestSequenceOfMealsInDiet () {
+        let sequenceCounter = 0;
+        let currentBestSequence = 0;
+
+        for (const meal of meals) {
+            if (!meal.isInDiet) {
+                currentBestSequence = sequenceCounter > currentBestSequence ? sequenceCounter : currentBestSequence;
+                sequenceCounter = 0; // restart sequence counter
+            } else {
+                sequenceCounter++;
+            }
+        }
+
+        return currentBestSequence;
+    }
+
+    function calculateRegisteredMeals () {
+        return meals.length;
+    }
+
+    function calculateMealsInDiet () {
+        return meals.reduce((acc, curr) => {
+            return curr.isInDiet ? acc + 1 : acc;
+        }, 0)
+    }
+
+    function calculateMealsNotInDiet() {
+        return registeredMeals - mealsInDiet;
     }
 
     return (
@@ -41,27 +74,27 @@ const Statistics = () => {
                 </StatisticsDataTitle>
 
                 <StatisticsData 
-                    value = {22}
+                    value = {bestSequenceOfInDietMeals}
                     subtitle = 'melhor sequência de pratos dentro da dieta'
                     bgColor = 'BG_LIGHT_GRAY'
                 />
 
                 <StatisticsData 
-                    value = {109}
+                    value = {registeredMeals}
                     subtitle = 'refeições registradas'
                     bgColor = 'BG_LIGHT_GRAY'
                 />
 
                 <StatisticsSideBySide>
                     <StatisticsData 
-                        value = {99}
+                        value = {mealsInDiet}
                         subtitle = 'refeições dentro da dieta'
                         bgColor = 'LIGHT_GREEN'
                         limitWidth
                     />
 
                     <StatisticsData 
-                        value = {10}
+                        value = {mealsNotInDiet}
                         subtitle = 'refeições fora da dieta'
                         bgColor = 'LIGHT_RED'
                         limitWidth

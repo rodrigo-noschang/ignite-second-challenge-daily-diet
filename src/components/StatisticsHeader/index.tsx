@@ -1,3 +1,5 @@
+import { useRoute } from '@react-navigation/native'
+
 import { StatisticsHeaderContainer, 
     ReturnIconTouchable,
     ReturnIcon, 
@@ -8,7 +10,13 @@ type Props = {
     onNavigate: () => void
 }
 
+type RouteParams = {
+    mealsInDietPercentage: string
+}
+
 const StatisticsHeader = ({ onNavigate }: Props) => {
+    const route = useRoute();
+    const { mealsInDietPercentage } = route.params as RouteParams;
 
     return (
         <StatisticsHeaderContainer>
@@ -17,7 +25,7 @@ const StatisticsHeader = ({ onNavigate }: Props) => {
             </ReturnIconTouchable>
 
             <StatisticValue>
-                90.86%
+                {mealsInDietPercentage}%
             </StatisticValue>
 
             <StatisticText>
