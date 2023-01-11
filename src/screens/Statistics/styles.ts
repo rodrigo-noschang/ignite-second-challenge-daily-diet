@@ -1,7 +1,6 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
 import styled, { css } from 'styled-components/native';
 
-export const StatisticsContainer = styled(SafeAreaView)`
+export const StatisticsContainer = styled.View`
     flex: 1;
 `;
 
@@ -19,4 +18,9 @@ export const StatisticsDataTitle = styled.Text`
     `};
     text-align: center;
     margin-bottom: 15px;
+`;
+
+export const StatisticsSideBySide = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
 `;

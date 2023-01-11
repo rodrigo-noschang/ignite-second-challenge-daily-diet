@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { HomeContainer, MealsText, MealsListContainer } from './styles';
 
@@ -73,12 +74,18 @@ const Home = () => {
             ]
         }
     ]
+    const navigation = useNavigation();
+
+    const handleNavigation = () => {
+        const allMealsOnly = dailyMeals.map(dailyMeal => dailyMeal.mealsOfTheDay).flat();
+        navigation.navigate('statistics', {meals: allMealsOnly})
+    }
 
     useEffect(() => {
-        const allMeals = dailyMeals.map(dailyMeal => dailyMeal.mealsOfTheDay).flat();
-        const inDietMeals = allMeals.filter(meal => meal.isInDiet);
+        const allMealsOnly = dailyMeals.map(dailyMeal => dailyMeal.mealsOfTheDay).flat();
+        const inDietMeals = allMealsOnly.filter(meal => meal.isInDiet);
         
-        const inDietRatio = ((inDietMeals.length / allMeals.length) * 100).toFixed(2);
+        const inDietRatio = ((inDietMeals.length / allMealsOnly.length) * 100).toFixed(2);
         
         setInDietMealsPercentage(inDietRatio);
     }, [])
@@ -86,7 +93,10 @@ const Home = () => {
     return (
         <HomeContainer>  
             <ProfileHeader /> 
-            <DietOverall inDietMealsPercentage = {inDietMealsPercentage}/>
+            <DietOverall 
+                inDietMealsPercentage = {inDietMealsPercentage}
+                onNavigate = {handleNavigation}    
+            />
 
             <MealsText> Refeições </MealsText>
 

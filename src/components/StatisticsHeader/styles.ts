@@ -1,9 +1,15 @@
 import styled, { css } from "styled-components/native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { TouchableOpacity } from "react-native";
 
 export const StatisticsHeaderContainer = styled.View`
     background-color: ${({ theme }) => theme.COLORS.LIGHT_GREEN};
-    padding: 20px 20px 70px;
+    padding: 30px 20px 70px;
+`;
+
+export const ReturnIconTouchable = styled(TouchableOpacity)`
+    align-self: flex-start;
+    padding: 5px;
 `;
 
 export const ReturnIcon = styled(MaterialCommunityIcons).attrs(({ theme }) => ({

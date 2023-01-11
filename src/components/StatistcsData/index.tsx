@@ -4,12 +4,13 @@ import { StatisticsDataContainer, StatisticsDataValue, StatisticsDataText } from
 type Props = {
     bgColor: keyof typeof theme.COLORS, 
     value: number,
-    subtitle: string
+    subtitle: string,
+    limitWidth?: boolean
 }
 
-const StatisticsData = ({ bgColor, value, subtitle }: Props) => {
+const StatisticsData = ({ bgColor, value, subtitle, limitWidth = false }: Props) => {
     return (
-        <StatisticsDataContainer bgColor = {bgColor}>
+        <StatisticsDataContainer bgColor = {bgColor} limitWidth = {limitWidth}>
             <StatisticsDataValue>
                 { value }
             </StatisticsDataValue>

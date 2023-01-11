@@ -5,8 +5,7 @@ import { ThemeProvider } from 'styled-components/native';
 import { NunitoSans_400Regular, NunitoSans_700Bold, NunitoSans_800ExtraBold, useFonts } from '@expo-google-fonts/nunito-sans';
 import theme from './src/theme';
 
-import Home from '@screens/Home';
-import Statistics from '@screens/Statistics';
+import Routes from '@routes/index';
 
 export default function App() {
 	const [fontsLoaded] = useFonts({ NunitoSans_400Regular, NunitoSans_700Bold, NunitoSans_800ExtraBold })
@@ -15,7 +14,7 @@ export default function App() {
 		<ThemeProvider theme = {theme}>
 			<StatusBar />
 			{ fontsLoaded ?
-				<Statistics />
+				<Routes />
 			:
 				<ActivityIndicator />
 			}

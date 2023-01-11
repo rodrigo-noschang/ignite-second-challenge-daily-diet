@@ -5,14 +5,15 @@ import { DietOverallContainer,
     SubTitle } from './styles';
 
 type Props = {
-    inDietMealsPercentage: string
+    inDietMealsPercentage: string,
+    onNavigate: () => void
 }
 
-const DietOverall = ({ inDietMealsPercentage }: Props) => {
+const DietOverall = ({ inDietMealsPercentage, onNavigate }: Props) => {
 
     return (
         <DietOverallContainer>
-            <IconTouchable>
+            <IconTouchable onPress = {onNavigate}>
                 <Icon name = 'arrow-top-right'/>
             </IconTouchable>
 

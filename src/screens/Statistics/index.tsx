@@ -1,17 +1,39 @@
 import { StatusBar } from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { StatisticsContainer, StatisticsDataContainer, StatisticsDataTitle } from "./styles";
-import theme from "../../theme";
+import { MealType } from "@screens/Home";
+
+import { StatisticsContainer, 
+    StatisticsDataContainer, 
+    StatisticsDataTitle, 
+    StatisticsSideBySide } from "./styles";
 
 import StatisticsHeader from "@components/StatisticsHeader";
 import StatisticsData from "@components/StatistcsData";
 
+type RouteParams = {
+    meals: MealType[]
+}
+
 const Statistics = () => {
+    const navigation = useNavigation();
+    const route = useRoute();
+
+    const { meals } = route.params as RouteParams;
+    
+    console.log('On Statistics Screen - > ', meals);
+
+    const handleNavigation = () => {
+        navigation.navigate('home');
+    }
+
     return (
         <StatisticsContainer>
-            <StatusBar backgroundColor = {theme.COLORS.LIGHT_GREEN}/>
+            <StatusBar backgroundColor = 'transparent'/>
 
-            <StatisticsHeader />
+            <StatisticsHeader 
+                onNavigate = {handleNavigation}
+            />
 
             <StatisticsDataContainer>
                 <StatisticsDataTitle>
@@ -30,17 +52,21 @@ const Statistics = () => {
                     bgColor = 'BG_LIGHT_GRAY'
                 />
 
-                <StatisticsData 
-                    value = {99}
-                    subtitle = 'refeições dentro da dieta'
-                    bgColor = 'LIGHT_GREEN'
-                />
+                <StatisticsSideBySide>
+                    <StatisticsData 
+                        value = {99}
+                        subtitle = 'refeições dentro da dieta'
+                        bgColor = 'LIGHT_GREEN'
+                        limitWidth
+                    />
 
-                <StatisticsData 
-                    value = {10}
-                    subtitle = 'refeições fora da dieta'
-                    bgColor = 'LIGHT_RED'
-                />
+                    <StatisticsData 
+                        value = {10}
+                        subtitle = 'refeições fora da dieta'
+                        bgColor = 'LIGHT_RED'
+                        limitWidth
+                    />
+                </StatisticsSideBySide>
 
             </StatisticsDataContainer>
 

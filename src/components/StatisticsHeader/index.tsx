@@ -1,13 +1,20 @@
 import { StatisticsHeaderContainer, 
+    ReturnIconTouchable,
     ReturnIcon, 
     StatisticText, 
 StatisticValue } from './styles'
 
-const StatisticsHeader = () => {
+type Props = {
+    onNavigate: () => void
+}
+
+const StatisticsHeader = ({ onNavigate }: Props) => {
 
     return (
         <StatisticsHeaderContainer>
-            <ReturnIcon name = 'arrow-left'/>
+            <ReturnIconTouchable onPress = {onNavigate}>
+                <ReturnIcon name = 'arrow-left'/>
+            </ReturnIconTouchable>
 
             <StatisticValue>
                 90.86%

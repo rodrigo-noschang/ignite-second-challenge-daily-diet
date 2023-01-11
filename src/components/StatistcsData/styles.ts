@@ -3,6 +3,7 @@ import styled, { css } from "styled-components/native";
 
 type Props = {
     bgColor: keyof typeof theme.COLORS;
+    limitWidth?: boolean;
 }
 
 export const StatisticsDataContainer = styled.View<Props>`
@@ -10,6 +11,7 @@ export const StatisticsDataContainer = styled.View<Props>`
     border-radius: 5px;
     padding: 20px;
     margin-top: 10px;
+    width: ${({ limitWidth }) => limitWidth ? '48%' : '100%'};
 `;
 
 export const StatisticsDataValue  = styled.Text`
