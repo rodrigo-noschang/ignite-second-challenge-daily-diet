@@ -10,11 +10,12 @@ type Props = {
 }
 
 const DietOverall = ({ inDietMealsPercentage, onNavigate }: Props) => {
+    const percentage = parseInt(inDietMealsPercentage);
 
     return (
-        <DietOverallContainer>
+        <DietOverallContainer percentage = {percentage}>
             <IconTouchable onPress = {onNavigate}>
-                <Icon name = 'arrow-top-right'/>
+                <Icon name = 'arrow-top-right' percentage = {percentage}/>
             </IconTouchable>
 
             <Title>

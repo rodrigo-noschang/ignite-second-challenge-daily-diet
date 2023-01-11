@@ -40,12 +40,12 @@ const Home = () => {
                 {
                     mealFood: 'Lasanha de frango com queijo',
                     time: '12:30',
-                    isInDiet: false
+                    isInDiet: true
                 },
                 {
                     mealFood: 'Torta de chocolate',
                     time: '09:30',
-                    isInDiet: false
+                    isInDiet: true
                 },
             ]
         },
@@ -77,11 +77,15 @@ const Home = () => {
     ]
     const navigation = useNavigation();
 
-    const handleNavigation = () => {
+    const handleNavigateToStatistics = () => {
         navigation.navigate('statistics', {
             meals: mealsOnly,
             mealsInDietPercentage: inDietMealsPercentage
         })
+    }
+
+    const handleNavigateToNealMeal = () => {
+        navigation.navigate('newMeal');
     }
 
     useEffect(() => {
@@ -99,7 +103,7 @@ const Home = () => {
             <ProfileHeader /> 
             <DietOverall 
                 inDietMealsPercentage = {inDietMealsPercentage}
-                onNavigate = {handleNavigation}    
+                onNavigate = {handleNavigateToStatistics}    
             />
 
             <MealsText> Refeições </MealsText>
@@ -108,6 +112,7 @@ const Home = () => {
                 buttonType = 'DARK' 
                 title = 'Nova Refeição'
                 iconName = 'plus'
+                onPress = { handleNavigateToNealMeal }
             />
 
             <MealsListContainer>

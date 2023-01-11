@@ -2,9 +2,19 @@ import styled, { css } from "styled-components/native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native";
 
-export const StatisticsHeaderContainer = styled.View`
-    background-color: ${({ theme }) => theme.COLORS.LIGHT_GREEN};
+import { mealsInDietThreshold } from "@components/DietOverall/styles";
+
+type Props = {
+    percentage: number
+}
+
+export const StatisticsHeaderContainer = styled.View<Props>`
     padding: 30px 20px 70px;
+
+    background-color: ${({ theme, percentage }) => (
+        percentage >= mealsInDietThreshold ? theme.COLORS.LIGHT_GREEN :
+        theme.COLORS.LIGHT_RED
+    )};
 `;
 
 export const ReturnIconTouchable = styled(TouchableOpacity)`
@@ -12,9 +22,9 @@ export const ReturnIconTouchable = styled(TouchableOpacity)`
     padding: 5px;
 `;
 
-export const ReturnIcon = styled(MaterialCommunityIcons).attrs(({ theme }) => ({
+export const ReturnIcon = styled(MaterialCommunityIcons).attrs<Props>(({ theme, percentage }) => ({
     size: 22,
-    color: theme.COLORS.DARK_GREEN
+    color: percentage >= mealsInDietThreshold ? theme.COLORS.DARK_GREEN : theme.COLORS.DARK_RED
 }))``;
 
 export const StatisticValue = styled.Text`

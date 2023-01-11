@@ -62,8 +62,7 @@ const Statistics = () => {
 
     return (
         <StatisticsContainer>
-            <StatusBar backgroundColor = 'transparent'/>
-
+            
             <StatisticsHeader 
                 onNavigate = {handleNavigation}
             />

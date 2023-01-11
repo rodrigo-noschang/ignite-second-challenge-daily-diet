@@ -18,10 +18,12 @@ const StatisticsHeader = ({ onNavigate }: Props) => {
     const route = useRoute();
     const { mealsInDietPercentage } = route.params as RouteParams;
 
+    const percentage = parseInt(mealsInDietPercentage);
+
     return (
-        <StatisticsHeaderContainer>
+        <StatisticsHeaderContainer percentage = {percentage}>
             <ReturnIconTouchable onPress = {onNavigate}>
-                <ReturnIcon name = 'arrow-left'/>
+                <ReturnIcon name = 'arrow-left' percentage = {percentage}/>
             </ReturnIconTouchable>
 
             <StatisticValue>

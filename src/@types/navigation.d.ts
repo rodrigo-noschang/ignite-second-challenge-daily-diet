@@ -7,7 +7,8 @@ export declare global {
             statistics: {
                 meals: MealType[],
                 mealsInDietPercentage: string
-            }
+            },
+            newMeal: undefined
         }
     }
 }
