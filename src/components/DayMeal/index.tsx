@@ -1,12 +1,12 @@
 import { DayMealContainer, DateHeader } from './styles';
 
-import { DailyMealType } from '@screens/Home';
+import { DailyMealsType } from '@screens/Home';
 
 import Meal from '@components/Meal';
 import { FlatList } from 'react-native';
 
 
-const DayMeal = ({ date, mealsOfTheDay }: DailyMealType) => {
+const DayMeal = ({ date, mealsOfTheDay }: DailyMealsType) => {
 
     return (
         <DayMealContainer>

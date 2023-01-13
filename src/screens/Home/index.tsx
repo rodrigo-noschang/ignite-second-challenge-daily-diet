@@ -9,13 +9,16 @@ import DietOverall from '@components/DietOverall';
 import ActionButton from '@components/ActionButton';
 import DayMeal from '@components/DayMeal';
 
+import { mealsGetAll } from '@storage/Meals/mealsGetAll';
+
 export type MealType = {
-    mealFood: string,
+    name: string,
+    description: string,
     time: string,
     isInDiet: boolean
 }
 
-export type DailyMealType = {
+export type DailyMealsType = {
     date: string,
     mealsOfTheDay: MealType[]
 }
@@ -23,58 +26,7 @@ export type DailyMealType = {
 const Home = () => {
     const [inDietMealsPercentage, setInDietMealsPercentage] = useState('');
     const [mealsOnly, setMealsOnly] = useState<MealType[]>([]);
-    const dailyMeals: DailyMealType[] = [
-        {
-            date: '12.08.22',
-            mealsOfTheDay: [
-                {
-                    mealFood: 'X-tudo',
-                    time: '20:00',
-                    isInDiet: true
-                },
-                {
-                    mealFood: 'Sanduíche',
-                    time: '16:00',
-                    isInDiet: true
-                },
-                {
-                    mealFood: 'Lasanha de frango com queijo',
-                    time: '12:30',
-                    isInDiet: true
-                },
-                {
-                    mealFood: 'Torta de chocolate',
-                    time: '09:30',
-                    isInDiet: true
-                },
-            ]
-        },
-        {
-            date: '11.08.22',
-            mealsOfTheDay: [
-                {
-                    mealFood: 'X-tudo',
-                    time: '20:00',
-                    isInDiet: true
-                },
-                {
-                    mealFood: 'Sanduíche',
-                    time: '16:00',
-                    isInDiet: true
-                },
-                {
-                    mealFood: 'Lasanha de frango com queijo',
-                    time: '12:30',
-                    isInDiet: true
-                },
-                {
-                    mealFood: 'Torta de chocolate',
-                    time: '09:30',
-                    isInDiet: false
-                },
-            ]
-        }
-    ]
+    const [dailyMealsState, setDailyMealsState] = useState<DailyMealsType[]>([]);
     const navigation = useNavigation();
 
     const handleNavigateToStatistics = () => {
@@ -88,14 +40,27 @@ const Home = () => {
         navigation.navigate('newMeal');
     }
 
+    const fetchMeals = async () => {
+        try {
+            const dailyMeals = await mealsGetAll();
+
+            const allMealsOnly = dailyMeals.map(dailyMeal => dailyMeal.mealsOfTheDay).flat();
+            const inDietMeals = allMealsOnly.filter(meal => meal.isInDiet);
+            
+            const inDietRatio = allMealsOnly.length > 0 ? 
+                ((inDietMeals.length / allMealsOnly.length) * 100).toFixed(2).replace('.', ',')
+                : '0';
+            
+            setMealsOnly(allMealsOnly);
+            setInDietMealsPercentage(inDietRatio);
+            setDailyMealsState(dailyMeals);
+        } catch (error) {
+            throw Error('Não foi possível acessar as refeições');
+        }
+    }
+
     useEffect(() => {
-        const allMealsOnly = dailyMeals.map(dailyMeal => dailyMeal.mealsOfTheDay).flat();
-        const inDietMeals = allMealsOnly.filter(meal => meal.isInDiet);
-        
-        const inDietRatio = ((inDietMeals.length / allMealsOnly.length) * 100).toFixed(2).replace('.', ',');
-        
-        setMealsOnly(allMealsOnly);
-        setInDietMealsPercentage(inDietRatio);
+        fetchMeals();
     }, [])
 
     return (
@@ -117,7 +82,7 @@ const Home = () => {
 
             <MealsListContainer>
                 <FlatList 
-                    data = {dailyMeals}
+                    data = {dailyMealsState}
                     keyExtractor = {item => item.date}
                     renderItem = {({ item }) => (
                         <DayMeal date = {item.date} mealsOfTheDay = {item.mealsOfTheDay}/>

@@ -4,7 +4,7 @@ import { TouchableOpacity } from "react-native";
 
 type optionsProps = {
     option: string,
-    selected: string
+    isInDiet: string
 }
 
 export const NewMealFormContainer = styled.View`
@@ -91,18 +91,18 @@ export const InDietOption = styled(TouchableOpacity)<optionsProps>`
     flex-direction: row;
     align-items: center;
     
-    background-color: ${({theme, option, selected}) => (
-        option === 'yes' && selected === option ? theme.COLORS.LIGHT_GREEN : 
-        option === 'no' && selected === option ? theme.COLORS.LIGHT_RED :
+    background-color: ${({theme, option, isInDiet}) => (
+        option === 'yes' && isInDiet === option ? theme.COLORS.LIGHT_GREEN : 
+        option === 'no' && isInDiet === option ? theme.COLORS.LIGHT_RED :
         theme.COLORS.BG_LIGHT_GRAY
     )}
 
-    border: ${({ option, selected }) => (
-        selected === option ? `2px solid` : 'none'
+    border: ${({ option, isInDiet }) => (
+        isInDiet === option ? `2px solid` : 'none'
     )}
-    border-color: ${({theme, option, selected}) => (
-        option === 'yes' && selected === option ? theme.COLORS.DARK_GREEN : 
-        option === 'no' && selected === option ? theme.COLORS.DARK_RED :
+    border-color: ${({theme, option, isInDiet}) => (
+        option === 'yes' && isInDiet === option ? theme.COLORS.DARK_GREEN : 
+        option === 'no' && isInDiet === option ? theme.COLORS.DARK_RED :
         'transparent'
     )}
 
@@ -116,4 +116,10 @@ export const InDietOptionText = styled.Text`
         font-size: ${theme.FONT_SIZE.SM}px;
     `};
     margin-left: 10px;
+`;
+
+export const ButtonContainer = styled.View`
+    flex: 1;
+    justify-content: flex-end;
+    padding-bottom: 30px;
 `;
