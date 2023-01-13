@@ -16,7 +16,7 @@ const DayMeal = ({ date, mealsOfTheDay }: DailyMealsType) => {
 
             <FlatList 
                 data = {mealsOfTheDay}
-                keyExtractor = {item => item.mealFood}
+                keyExtractor = {item => item.name}
                 renderItem = {({ item }) => (
                     <Meal singleMeal = {item}/>
                 )}

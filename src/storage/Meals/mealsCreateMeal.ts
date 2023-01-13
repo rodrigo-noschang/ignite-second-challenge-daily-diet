@@ -23,6 +23,8 @@ export const mealsCreateMeal = async (newMeal: DailyMealType) => {
             dateMeals.mealsOfTheDay.unshift(newMeal.meal);
         }
 
+        await AsyncStorage.setItem(MEALS_COLLECTION, JSON.stringify(storedMeals))
+
         console.log('mealsCreateMeal -> ', storedMeals);
     } catch (error) {
         throw error;

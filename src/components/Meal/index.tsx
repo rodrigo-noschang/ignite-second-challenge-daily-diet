@@ -15,7 +15,7 @@ const Meal = ({ singleMeal }: Props) => {
             </MealTime>
 
             <MealName>
-                {singleMeal.mealFood}
+                {singleMeal.name}
             </MealName>
 
             <MealInDietIcon isInDiet = {singleMeal.isInDiet} name = 'circle'/>
