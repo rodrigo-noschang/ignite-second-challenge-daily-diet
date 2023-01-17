@@ -1,6 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
-import { LinearGradient } from 'expo-linear-gradient';
 
 export const HomeContainer = styled(SafeAreaView)`
     background-color: #fff;

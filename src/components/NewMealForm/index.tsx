@@ -19,9 +19,10 @@ import { NewMealFormContainer,
 
 import ActionButton from "@components/ActionButton";
 
-import { mealsCreateMeal } from "@storage/Meals/mealsCreateMeal";
+import { deleteAllMeals, mealsCreateMeal } from "@storage/Meals/mealsCreateMeal";
 
 import { InputFormatError } from "../../error";
+
 
 const NewMealForm = () => {
     const [name, setName] = useState('');
@@ -128,6 +129,14 @@ const NewMealForm = () => {
         return newMeal;
     }
 
+    const handleNavigation = (isInDiet: boolean) => {
+        const title = isInDiet ? 'Continue assim!' : 'Que pena!';
+        navigate.navigate('newMealFeedback', {
+            inDiet: isInDiet,
+            title
+        })
+    }
+
     const handleRegisterNewMeal = async () => {
         try {
             validateNameInput();
@@ -138,6 +147,8 @@ const NewMealForm = () => {
 
             const mealObject = createMealObject();
             await mealsCreateMeal(mealObject);
+
+            handleNavigation(mealObject.meal.isInDiet);
         
         } catch (error) {
             const errorMessage = error instanceof InputFormatError ?
@@ -152,8 +163,6 @@ const NewMealForm = () => {
             setDate('');
             setTime('');
             setIsInDiet('');
-
-            navigate.navigate('home');
         }
     }
 

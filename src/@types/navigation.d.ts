@@ -9,6 +9,10 @@ export declare global {
                 mealsInDietPercentage: string
             },
             newMeal: undefined
+            newMealFeedback: {
+                inDiet: boolean,
+                title: string
+            }
         }
     }
 }
