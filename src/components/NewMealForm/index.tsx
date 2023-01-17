@@ -1,5 +1,7 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { Alert } from 'react-native';
 import { useTheme } from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 
 import { NewMealFormContainer, 
     LabelInputContainer,
@@ -18,7 +20,8 @@ import { NewMealFormContainer,
 import ActionButton from "@components/ActionButton";
 
 import { mealsCreateMeal } from "@storage/Meals/mealsCreateMeal";
-import { DailyMealsType } from "@screens/Home";
+
+import { InputFormatError } from "../../error";
 
 const NewMealForm = () => {
     const [name, setName] = useState('');
@@ -26,7 +29,8 @@ const NewMealForm = () => {
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
     const [isInDiet, setIsInDiet] = useState('');
-    
+
+    const navigate = useNavigation();
     const theme = useTheme();
 
     const selectYes = () => {
@@ -39,22 +43,27 @@ const NewMealForm = () => {
 
     const validateNameInput = () => {
         if (name.length === 0) {
-            throw new Error('Nome inválido');
+            throw new InputFormatError('Nome inválido');
         }
     }
 
     const validateDescriptionInput = () => {
         if (description.length === 0) {
-            throw new Error('Descrição inválida');
+            throw new InputFormatError('Descrição inválida');
         }
     }
 
     const validateDateInput = () => {
         const separatedValues = date.split('.');
+
+        if (separatedValues.length !== 3) {
+            throw new InputFormatError('A data deve incluir dia, mês e ano');
+        }
+
         const isCorrectlyFormated = separatedValues.every(el => el.length === 2);
 
         if (!isCorrectlyFormated) {
-            throw new Error('Os valores da data devem ter 2 dígitos e serem separados por um ponto');
+            throw new InputFormatError('Os valores da data devem ter 2 dígitos e serem separados por um ponto');
         }
     }
 
@@ -64,19 +73,22 @@ const NewMealForm = () => {
         const minutes = parseInt(timeValues[1]);
         const isCorrectlyFormated = timeValues.every(el => el.length === 2);
 
-        console.log(hours, typeof hours);
-        console.log(minutes, typeof minutes);
-
         if (!isCorrectlyFormated) {
-            throw new Error('Os valores da hora devem ter 2 dígitos e serem separados por dois pontos');
+            throw new InputFormatError('Os valores da hora devem ter 2 dígitos e serem separados por dois pontos');
         }
 
         if (hours > 24) {
-            throw new Error('Valor das horas inválido');
+            throw new InputFormatError('Valor das horas inválido');
         }
 
         if (minutes > 59) {
-            throw new Error('Valor dos minutos inválidos');
+            throw new InputFormatError('Valor dos minutos inválidos');
+        }
+    }
+
+    const validateIsInDiet = () => {
+        if (isInDiet.length === 0) {
+            throw new InputFormatError('Selecione Sim ou Não para a opção Está dentro da dieta?');
         }
     }
 
@@ -102,7 +114,7 @@ const NewMealForm = () => {
         setTime(newValue);
     }
 
-    const createMealObject = async () => { 
+    const createMealObject = () => { 
         const newMeal = {
             date,
             meal: {
@@ -113,30 +125,36 @@ const NewMealForm = () => {
             }
         }
 
-        await mealsCreateMeal(newMeal);
+        return newMeal;
     }
 
-    const handleRegisterNewMeal = () => {
+    const handleRegisterNewMeal = async () => {
         try {
             validateNameInput();
             validateDescriptionInput();
             validateDateInput();
             validateTimeInput();
+            validateIsInDiet();
 
-            const meal = createMealObject();
+            const mealObject = createMealObject();
+            await mealsCreateMeal(mealObject);
         
         } catch (error) {
-            console.log(error);
-        
+            const errorMessage = error instanceof InputFormatError ?
+                error.message :
+                'Não foi possível criar essa refeição';
+
+            return Alert.alert('Nova Refeição', errorMessage);
         
         } finally {
-            // setName('');
-            // setDescription('');
-            // setDate('');
-            // setTime('');
-            // setIsInDiet('');
-        }
+            setName('');
+            setDescription('');
+            setDate('');
+            setTime('');
+            setIsInDiet('');
 
+            navigate.navigate('home');
+        }
     }
 
     return(

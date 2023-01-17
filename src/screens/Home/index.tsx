@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import { HomeContainer, MealsText, MealsListContainer } from './styles';
 
@@ -59,9 +59,9 @@ const Home = () => {
         }
     }
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
         fetchMeals();
-    }, [])
+    }, []))
 
     return (
         <HomeContainer>  

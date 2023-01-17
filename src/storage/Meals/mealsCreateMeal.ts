@@ -24,8 +24,14 @@ export const mealsCreateMeal = async (newMeal: DailyMealType) => {
         }
 
         await AsyncStorage.setItem(MEALS_COLLECTION, JSON.stringify(storedMeals))
+    } catch (error) {
+        throw error;
+    }
+}
 
-        console.log('mealsCreateMeal -> ', storedMeals);
+export const deleteAllMeals = async () => {
+    try {
+        AsyncStorage.removeItem(MEALS_COLLECTION);
     } catch (error) {
         throw error;
     }
