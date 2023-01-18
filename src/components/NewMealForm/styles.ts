@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components/native";
 import { FontAwesome } from '@expo/vector-icons';
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, TouchableWithoutFeedback } from "react-native";
 
 type optionsProps = {
     option: string,

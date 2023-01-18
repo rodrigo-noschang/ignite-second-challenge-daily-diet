@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert } from 'react-native';
+import { Alert, Keyboard } from 'react-native';
 import { useTheme } from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -23,6 +23,7 @@ import { deleteAllMeals, mealsCreateMeal } from "@storage/Meals/mealsCreateMeal"
 
 import { InputFormatError } from "../../error";
 import { idCounter, increaseCounter } from "@utils/mealId";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const NewMealForm = () => {
     const [name, setName] = useState('');
@@ -172,96 +173,100 @@ const NewMealForm = () => {
 
     return(
         <NewMealFormContainer>
-            <LabelInputContainer>
-                <Label> Nome </Label>
-                <Input 
-                    onChangeText = {setName}
-                    value = {name}
-                    placeholder = 'Alimento da refeição'
-                    placeholderTextColor = {theme.COLORS.BG_MEDIUM_GRAY}
-                />
-            </LabelInputContainer>
-
-            <LabelInputContainer>
-                <Label> Descrição </Label>
-                <TextField 
-                    multiline 
-                    textAlignVertical = 'top'
-                    onChangeText = {setDescription}
-                    value = {description}
-                    placeholder = 'Descrição'
-                    placeholderTextColor = {theme.COLORS.BG_MEDIUM_GRAY}
-                />
-            </LabelInputContainer>
-
-            <SideBySideElement>
                 <LabelInputContainer>
-                    <Label>
-                        Data
-                    </Label>
-                    <ShortInput 
-                        onChangeText = {formatDateInput}
-                        value = {date}
-                        placeholder = 'dd.mm.aa'
+                    <Label> Nome </Label>
+                    <Input 
+                        onChangeText = {setName}
+                        value = {name}
+                        placeholder = 'Alimento da refeição'
                         placeholderTextColor = {theme.COLORS.BG_MEDIUM_GRAY}
-                        maxLength = {8}
-                        keyboardType = 'numeric'
+                        onBlur = {Keyboard.dismiss}
                     />
                 </LabelInputContainer>
 
                 <LabelInputContainer>
-                    <Label>
-                        Hora
-                    </Label>
-                    <ShortInput 
-                        onChangeText = {formatHourInput}
-                        value = {time}
-                        placeholder = '09:00'
+                    <Label> Descrição </Label>
+                    <TextField 
+                        multiline 
+                        textAlignVertical = 'top'
+                        onChangeText = {setDescription}
+                        value = {description}
+                        placeholder = 'Descrição'
                         placeholderTextColor = {theme.COLORS.BG_MEDIUM_GRAY}
-                        maxLength = {5}
-                        keyboardType = "numeric"
+                        onBlur = {Keyboard.dismiss}
                     />
                 </LabelInputContainer>
-            </SideBySideElement>
 
-            <InDietTitle>
-                Está dentro da dieta?
-            </InDietTitle>
+                <SideBySideElement>
+                    <LabelInputContainer>
+                        <Label>
+                            Data
+                        </Label>
+                        <ShortInput 
+                            onChangeText = {formatDateInput}
+                            value = {date}
+                            placeholder = 'dd.mm.aa'
+                            placeholderTextColor = {theme.COLORS.BG_MEDIUM_GRAY}
+                            maxLength = {8}
+                            keyboardType = 'numeric'
+                            onBlur = {Keyboard.dismiss}
+                        />
+                    </LabelInputContainer>
 
-            <SideBySideElement>
-                <InDietOption 
-                    option = 'yes' 
-                    isInDiet = {isInDiet}
-                    onPress = {selectYes}
-                >
+                    <LabelInputContainer>
+                        <Label>
+                            Hora
+                        </Label>
+                        <ShortInput 
+                            onChangeText = {formatHourInput}
+                            value = {time}
+                            placeholder = '09:00'
+                            placeholderTextColor = {theme.COLORS.BG_MEDIUM_GRAY}
+                            maxLength = {5}
+                            keyboardType = "numeric"
+                            onBlur = {Keyboard.dismiss}
+                        />
+                    </LabelInputContainer>
+                </SideBySideElement>
 
-                    <InDietIcon name = 'circle' color = {theme.COLORS.DARK_GREEN}/>
+                <InDietTitle>
+                    Está dentro da dieta?
+                </InDietTitle>
 
-                    <InDietOptionText>
-                        Sim
-                    </InDietOptionText>
-                </InDietOption>
+                <SideBySideElement>
+                    <InDietOption 
+                        option = 'yes' 
+                        isInDiet = {isInDiet}
+                        onPress = {selectYes}
+                    >
 
-                <InDietOption 
-                    option = 'no' 
-                    isInDiet = {isInDiet}
-                    onPress = {selectNo}    
-                >
-                    <InDietIcon name = 'circle' color = {theme.COLORS.DARK_RED}/>
+                        <InDietIcon name = 'circle' color = {theme.COLORS.DARK_GREEN}/>
 
-                    <InDietOptionText>
-                        Não
-                    </InDietOptionText>
-                </InDietOption>
-            </SideBySideElement>
+                        <InDietOptionText>
+                            Sim
+                        </InDietOptionText>
+                    </InDietOption>
 
-            <ButtonContainer>
-                <ActionButton 
-                    buttonType = 'DARK'
-                    title = 'Cadastrar Refeição'
-                    onPress = {handleRegisterNewMeal}
-                />
-            </ButtonContainer>
+                    <InDietOption 
+                        option = 'no' 
+                        isInDiet = {isInDiet}
+                        onPress = {selectNo}    
+                    >
+                        <InDietIcon name = 'circle' color = {theme.COLORS.DARK_RED}/>
+
+                        <InDietOptionText>
+                            Não
+                        </InDietOptionText>
+                    </InDietOption>
+                </SideBySideElement>
+
+                <ButtonContainer>
+                    <ActionButton 
+                        buttonType = 'DARK'
+                        title = 'Cadastrar Refeição'
+                        onPress = {handleRegisterNewMeal}
+                    />
+                </ButtonContainer>
         </NewMealFormContainer>
     )
 }

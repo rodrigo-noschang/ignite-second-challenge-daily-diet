@@ -36,14 +36,14 @@ const Statistics = () => {
 
         for (const meal of meals) {
             if (!meal.isInDiet) {
-                currentBestSequence = sequenceCounter > currentBestSequence ? sequenceCounter : currentBestSequence;
+                currentBestSequence = Math.max(sequenceCounter, currentBestSequence);
                 sequenceCounter = 0; // restart sequence counter
             } else {
                 sequenceCounter++;
             }
         }
 
-        return currentBestSequence;
+        return Math.max(sequenceCounter, currentBestSequence);
     }
 
     function calculateRegisteredMeals () {

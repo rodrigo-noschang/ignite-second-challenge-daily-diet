@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { FlatList } from 'react-native';
+import { ActivityIndicator, FlatList } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import { HomeContainer, MealsText, MealsListContainer } from './styles';
@@ -29,6 +29,7 @@ const Home = () => {
     const [inDietMealsPercentage, setInDietMealsPercentage] = useState('');
     const [mealsOnly, setMealsOnly] = useState<MealType[]>([]);
     const [dailyMealsState, setDailyMealsState] = useState<DailyMealsType[]>([]);
+    const [fetchingData, setFetchingData] = useState(false);
     const navigation = useNavigation();
 
     const handleNavigateToStatistics = () => {
@@ -44,6 +45,7 @@ const Home = () => {
 
     const fetchMeals = async () => {
         try {
+            setFetchingData(true)
             const dailyMeals = await mealsGetAll();
 
             const allMealsOnly = dailyMeals.map(dailyMeal => dailyMeal.mealsOfTheDay).flat();
@@ -58,6 +60,8 @@ const Home = () => {
             setDailyMealsState(dailyMeals);
         } catch (error) {
             throw Error('Não foi possível acessar as refeições');
+        } finally {
+            setFetchingData(false);
         }
     }
 
@@ -66,6 +70,7 @@ const Home = () => {
     }, []))
 
     return (
+        !fetchingData ? 
         <HomeContainer>  
             <ProfileHeader /> 
             <DietOverall 
@@ -95,6 +100,8 @@ const Home = () => {
             </MealsListContainer>
 
         </HomeContainer>
+        :
+        <ActivityIndicator />
     )
 }
 
