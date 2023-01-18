@@ -8,6 +8,7 @@ import ProfileHeader from '@components/ProfileHeader';
 import DietOverall from '@components/DietOverall';
 import ActionButton from '@components/ActionButton';
 import DayMeal from '@components/DayMeal';
+import EmptyList from '@components/EmptyList';
 
 import { mealsGetAll } from '@storage/Meals/mealsGetAll';
 
@@ -89,6 +90,7 @@ const Home = () => {
                         <DayMeal date = {item.date} mealsOfTheDay = {item.mealsOfTheDay}/>
                     )}
                     showsVerticalScrollIndicator = { false }
+                    ListEmptyComponent = {EmptyList}
                 />
             </MealsListContainer>
 
