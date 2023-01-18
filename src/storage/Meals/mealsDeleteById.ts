@@ -12,7 +12,13 @@ export const mealsDeleteById = async (foodId: number, date: string) => {
 
     const removedMeal = dateMeals.mealsOfTheDay.filter(meal => meal.id !== foodId);
     
-    dateMeals.mealsOfTheDay = removedMeal;
+    if (removedMeal.length > 0 ) { // Means there is still food for that day
+        dateMeals.mealsOfTheDay = removedMeal;
+        await AsyncStorage.setItem(MEALS_COLLECTION, JSON.stringify(allMeals));
 
-    await AsyncStorage.setItem(MEALS_COLLECTION, JSON.stringify(allMeals));
+    } else {
+        const removedDay = allMeals.filter(dayMeal => dayMeal.date !== date);
+        await AsyncStorage.setItem(MEALS_COLLECTION, JSON.stringify(removedDay));
+    }
+
 }

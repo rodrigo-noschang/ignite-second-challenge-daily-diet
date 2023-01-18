@@ -1,5 +1,5 @@
 import { ActivityIndicator, Alert } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 
@@ -10,6 +10,7 @@ import FoodData from '@components/FoodData';
 import { mealsGetById } from '@storage/Meals/mealsGetById';
 import { MealType } from '@screens/Home';
 import ActionButton from '@components/ActionButton';
+import PersonalAlert from '@components/PersonalAlert';
 
 import { mealsDeleteById } from '@storage/Meals/mealsDeleteById';
 
@@ -19,23 +20,26 @@ type RouteParams = {
 }
 
 const FoodOverview = () => {
-    const route = useRoute();
     const [food, setFood] = useState<MealType>();
+    const [showAlert, setShowAlert] = useState(false);
+
+    const navigate = useNavigation();
+    
+    const route = useRoute();
     const { foodId, date } = route.params as RouteParams;
 
-    const handleDeleteFood = () => {
-        Alert.alert('', 'Deseja realmente excluir o registro da refeição?', 
-        [
-            {
-                text: 'Sim',
-                onPress: () => mealsDeleteById(foodId, date)
-            },
-            {
-                text: 'Não'
-            }
-        ])
+    const showPersonalAlert = () => {
+        setShowAlert(true)
+    }
 
-        mealsDeleteById(foodId, date);
+    const hidePersonalAlert = () => {
+        setShowAlert(false)
+    }
+
+    const handleDeleteFood = async () => {
+        await mealsDeleteById(foodId, date);
+        hidePersonalAlert();
+        navigate.navigate('home');
     }
 
     const fetchFood = async () => {
@@ -63,9 +67,16 @@ const FoodOverview = () => {
                         title = 'Excluir refeição'
                         buttonType = 'LIGHT'
                         iconName = 'delete'
-                        onPress = {handleDeleteFood}
+                        onPress = {showPersonalAlert}
                     />
                 </ButtonsContainer>
+
+            { showAlert &&    
+                <PersonalAlert 
+                    cancelFunction = {hidePersonalAlert}
+                    confirmFunction = {handleDeleteFood}
+                />
+            }
             </FoodOverviewContainer>
         :
             <ActivityIndicator />
