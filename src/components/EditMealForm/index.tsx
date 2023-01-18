@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useTheme } from 'styled-components';
 import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import ActionButton from '@components/ActionButton';
 import { InputFormatError } from '../../error';
 import { idCounter, increaseCounter } from '@utils/mealId';
 import { mealsCreateMeal } from '@storage/Meals/mealsCreateMeal';
+import { mealsEditFood } from '@storage/Meals/mealsEditFood';
 
 import {
     NewMealFormContainer,
@@ -36,28 +38,13 @@ const EditMealForm = ({food, date}: Props) => {
     const [dateState, setDateState] = useState(date);
     const [time, setTime] = useState(food.time);
     const [isInDiet, setIsInDiet] = useState(food.isInDiet ? 'yes' : 'no');
-    
+
+    const navigate = useNavigation();
     const theme = useTheme();
-
-    const createMealObject = () => { 
-        console.log('Implementar a função que cria o objeto!!');
-        // const newMeal = {
-        //     date,
-        //     meal: {
-        //         id: idCounter,
-        //         name,
-        //         description,
-        //         time,
-        //         isInDiet: isInDiet === 'yes' ? true : false
-        //     }
-        // }
-
-        // return newMeal;
-    }
 
     const formatDateInput = (newValue: string) => {
         const newValueLength = newValue.length;
-        const isErasingInput = newValueLength < date.length;
+        const isErasingInput = newValueLength < dateState.length;
         
         if (!isErasingInput && (newValueLength === 2 || newValueLength === 5)) {
             newValue = newValue + '.';
@@ -145,13 +132,23 @@ const EditMealForm = ({food, date}: Props) => {
             validateTimeInput();
             validateIsInDiet();
         
+            const foodData = {
+                id: food.id,
+                name, 
+                description, 
+                time, 
+                isInDiet: isInDiet === 'yes'
+            }
+
+            await mealsEditFood(foodData, date, dateState);
+            navigate.navigate('home');
+
         } catch (error) {
             const errorMessage = error instanceof InputFormatError ?
                 error.message :
                 'Não foi possível criar essa refeição';
 
-            return Alert.alert('Nova Refeição', errorMessage);
-        
+            return Alert.alert('Editar Refeição', errorMessage);
         }
     }
 
@@ -186,7 +183,7 @@ const EditMealForm = ({food, date}: Props) => {
                     </Label>
                     <ShortInput 
                         onChangeText = {formatDateInput}
-                        value = {date}
+                        value = {dateState}
                         placeholder = 'dd.mm.aa'
                         placeholderTextColor = {theme.COLORS.BG_MEDIUM_GRAY}
                         maxLength = {8}
@@ -243,7 +240,7 @@ const EditMealForm = ({food, date}: Props) => {
             <ButtonContainer>
                 <ActionButton 
                     buttonType = 'DARK'
-                    title = 'Cadastrar Refeição'
+                    title = 'Salvar alterações'
                     onPress = {handleEditMeal}
                 />
             </ButtonContainer>
