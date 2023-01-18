@@ -12,6 +12,10 @@ export declare global {
             newMealFeedback: {
                 inDiet: boolean,
                 title: string
+            },
+            foodOverview: {
+                foodId: number,
+                date: string
             }
         }
     }

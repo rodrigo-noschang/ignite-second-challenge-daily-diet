@@ -1,15 +1,17 @@
+import { TouchableOpacityProps } from "react-native";
+
 import { MealContainer, MealTime, MealName, MealInDietIcon } from "./styles";
 
 import { MealType } from "@screens/Home";
 
-type Props = {
+type Props = TouchableOpacityProps & {
     singleMeal: MealType
 }
 
-const Meal = ({ singleMeal }: Props) => {
+const Meal = ({ singleMeal, ...rest }: Props) => {
 
     return (
-        <MealContainer>
+        <MealContainer {...rest}>
             <MealTime>
                 {singleMeal.time}
             </MealTime>

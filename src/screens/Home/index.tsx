@@ -12,6 +12,7 @@ import DayMeal from '@components/DayMeal';
 import { mealsGetAll } from '@storage/Meals/mealsGetAll';
 
 export type MealType = {
+    id: number,
     name: string,
     description: string,
     time: string,

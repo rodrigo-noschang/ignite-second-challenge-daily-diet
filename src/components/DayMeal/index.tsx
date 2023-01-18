@@ -1,12 +1,21 @@
+import { FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native'
+
 import { DayMealContainer, DateHeader } from './styles';
 
 import { DailyMealsType } from '@screens/Home';
-
 import Meal from '@components/Meal';
-import { FlatList } from 'react-native';
 
 
 const DayMeal = ({ date, mealsOfTheDay }: DailyMealsType) => {
+    const navigate = useNavigation();
+
+    const handleNavigation = async (id: number) => {
+        navigate.navigate('foodOverview', {
+            foodId: id,
+            date: date
+        })
+    }
 
     return (
         <DayMealContainer>
@@ -18,7 +27,10 @@ const DayMeal = ({ date, mealsOfTheDay }: DailyMealsType) => {
                 data = {mealsOfTheDay}
                 keyExtractor = {item => item.name}
                 renderItem = {({ item }) => (
-                    <Meal singleMeal = {item}/>
+                    <Meal 
+                        singleMeal = {item}
+                        onPress = {() => handleNavigation(item.id)}
+                    />
                 )}
             />
         </DayMealContainer>

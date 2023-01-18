@@ -1,11 +1,12 @@
 import styled, { css } from 'styled-components/native';
 import { FontAwesome } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native';
 
 type Props = {
     isInDiet: boolean
 }
 
-export const MealContainer = styled.View`
+export const MealContainer = styled(TouchableOpacity)`
     flex-direction: row;
     align-items: center;
     border: 1px solid ${({ theme }) => theme.COLORS.BG_MEDIUM_GRAY};

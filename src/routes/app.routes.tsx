@@ -4,6 +4,7 @@ import Home from "@screens/Home";
 import NewMeal from "@screens/NewMeal";
 import Statistics from "@screens/Statistics";
 import NewMealFeedback from "@screens/NewMealFeedback";
+import FoodOverview from "@screens/FoodOverview";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -15,6 +16,7 @@ const AppRoutes = () => {
             <Screen name = 'statistics' component = {Statistics}/>
             <Screen name = 'newMeal' component = {NewMeal}/>
             <Screen name = 'newMealFeedback' component = {NewMealFeedback}/>
+            <Screen name = 'foodOverview' component = {FoodOverview} />
         </Navigator>
     )
 }

@@ -22,7 +22,7 @@ import ActionButton from "@components/ActionButton";
 import { deleteAllMeals, mealsCreateMeal } from "@storage/Meals/mealsCreateMeal";
 
 import { InputFormatError } from "../../error";
-
+import { idCounter, increaseCounter } from "@utils/mealId";
 
 const NewMealForm = () => {
     const [name, setName] = useState('');
@@ -43,6 +43,7 @@ const NewMealForm = () => {
     }
 
     const validateNameInput = () => {
+
         if (name.length === 0) {
             throw new InputFormatError('Nome inválido');
         }
@@ -119,12 +120,15 @@ const NewMealForm = () => {
         const newMeal = {
             date,
             meal: {
+                id: idCounter,
                 name,
                 description,
                 time,
                 isInDiet: isInDiet === 'yes' ? true : false
             }
         }
+
+        increaseCounter();
 
         return newMeal;
     }
