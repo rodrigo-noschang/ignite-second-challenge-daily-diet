@@ -42,6 +42,10 @@ const FoodOverview = () => {
         navigate.navigate('home');
     }
 
+    const handleEditFood = () => {
+        navigate.navigate('editFood', {foodId, date});
+    }
+
     const fetchFood = async () => {
         const foodData = await mealsGetById(foodId, date);
         setFood(foodData);
@@ -62,6 +66,7 @@ const FoodOverview = () => {
                         title = 'Editar refeição'
                         buttonType = 'DARK'
                         iconName = 'edit'
+                        onPress = {handleEditFood}
                     />
                     <ActionButton 
                         title = 'Excluir refeição'

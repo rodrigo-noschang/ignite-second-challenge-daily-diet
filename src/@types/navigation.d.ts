@@ -16,6 +16,10 @@ export declare global {
             foodOverview: {
                 foodId: number,
                 date: string
+            },
+            editFood: {
+                foodId: number,
+                date: string
             }
         }
     }

@@ -5,6 +5,7 @@ import NewMeal from "@screens/NewMeal";
 import Statistics from "@screens/Statistics";
 import NewMealFeedback from "@screens/NewMealFeedback";
 import FoodOverview from "@screens/FoodOverview";
+import EditMeal from "@screens/EditMeal";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -17,6 +18,7 @@ const AppRoutes = () => {
             <Screen name = 'newMeal' component = {NewMeal}/>
             <Screen name = 'newMealFeedback' component = {NewMealFeedback}/>
             <Screen name = 'foodOverview' component = {FoodOverview} />
+            <Screen name = 'editFood' component = {EditMeal}/>
         </Navigator>
     )
 }
